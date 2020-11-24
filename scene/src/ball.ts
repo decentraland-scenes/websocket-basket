@@ -7,7 +7,7 @@ import utils from '../node_modules/decentraland-ecs-utils/index'
 import { TriggerSphereShape } from '../node_modules/decentraland-ecs-utils/triggers/triggerSystem'
 
 const X_OFFSET = 0
-const Y_OFFSET = 0.5
+const Y_OFFSET = -0.5
 const Z_OFFSET = 1.5
 
 const FIXED_TIME_STEPS = 1.0 / 60.0 // seconds
@@ -143,7 +143,7 @@ export class Ball extends Entity {
 
     this.body.velocity.setZero()
     this.body.angularVelocity.setZero()
-    this.setParent(Attachable.PLAYER) //  FIRST_PERSON_CAMERA)
+    this.setParent(Attachable.FIRST_PERSON_CAMERA) //  FIRST_PERSON_CAMERA)
     this.getComponent(Transform).position.set(X_OFFSET, Y_OFFSET, Z_OFFSET)
     this.getComponent(Transform).rotation = Quaternion.Euler(0, 180, 0)
     this.body.position = new CANNON.Vec3(X_OFFSET, Y_OFFSET, Z_OFFSET)
