@@ -1,6 +1,6 @@
-import * as ui from '../node_modules/@dcl/ui-utils/index'
-import utils from '../node_modules/decentraland-ecs-utils/index'
-import { TriggerBoxShape } from '../node_modules/decentraland-ecs-utils/triggers/triggerSystem'
+import * as ui from '@dcl/ui-scene-utils'
+import * as utils from '@dcl/ecs-scene-utils'
+
 import { threePointShot } from './game'
 import { dataType } from './wsConnection'
 
@@ -15,30 +15,28 @@ export class Hoop extends Entity {
 
     this.addComponent(
       new utils.TriggerComponent(
-        new TriggerBoxShape(new Vector3(1, 0.5, 1), new Vector3(0, 0, 0)),
-        2,
-        1,
-        () => {
-          this.socket.send(
-            JSON.stringify({
-              type: dataType.SCORE,
-              data: {
-                //   threePoints: threePointShot,
-                // score:
-              },
-            })
-          )
+        new utils.TriggerBoxShape(new Vector3(1, 0.5, 1), new Vector3(0, 0, 0)),
+        {
+          onTriggerEnter: () => {
+            this.socket.send(
+              JSON.stringify({
+                type: dataType.SCORE,
+                data: {
+                  //   threePoints: threePointShot,
+                  // score:
+                },
+              })
+            )
 
-          if (threePointShot) {
-            ui.displayAnnouncement('3 Point shot!')
-          } else {
-            ui.displayAnnouncement('2 Point shot!')
-          }
-        },
-        null,
-        null,
-        null
-        //true
+            if (threePointShot) {
+              ui.displayAnnouncement('3 Point shot!')
+            } else {
+              ui.displayAnnouncement('2 Point shot!')
+            }
+          },
+          layer: 1,
+          triggeredByLayer: 2,
+        }
       )
     )
   }

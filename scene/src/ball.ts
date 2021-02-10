@@ -1,10 +1,9 @@
 import { Sound } from './sounds'
-import * as ui from '../node_modules/@dcl/ui-utils/index'
+import * as ui from '@dcl/ui-scene-utils'
 import { createFloatingText } from './floatingText'
 import { alteredUserName, dataType } from './wsConnection'
 import { streakCounter } from './game'
-import utils from '../node_modules/decentraland-ecs-utils/index'
-import { TriggerSphereShape } from '../node_modules/decentraland-ecs-utils/triggers/triggerSystem'
+import * as utils from '@dcl/ecs-scene-utils'
 
 const X_OFFSET = 0
 const Y_OFFSET = -0.5
@@ -102,16 +101,14 @@ export class Ball extends Entity {
 
     this.addComponent(
       new utils.TriggerComponent(
-        new TriggerSphereShape(0.25, new Vector3(0, 0, 0)),
-        1,
-        2,
-        () => {
-          ui.displayAnnouncement('SCORE!')
-        },
-        null,
-        null,
-        null,
-        false
+        new utils.TriggerSphereShape(0.25, new Vector3(0, 0, 0)),
+        {
+          onTriggerEnter: () => {
+            ui.displayAnnouncement('SCORE!')
+          },
+          layer: 2,
+          triggeredByLayer: 1,
+        }
       )
     )
   }

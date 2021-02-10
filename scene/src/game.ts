@@ -1,5 +1,5 @@
-import * as ui from '../node_modules/@dcl/ui-utils/index'
-import utils from '../node_modules/decentraland-ecs-utils/index'
+import * as ui from '@dcl/ui-scene-utils'
+import * as utils from '@dcl/ecs-scene-utils'
 /*
   IMPORTANT: The tsconfig.json has been configured to include "node_modules/cannon/build/cannon.js"
 */
@@ -8,10 +8,8 @@ import { Ball } from './ball'
 import { addPhysicsConstraints } from './physicsConstraints'
 import { FloatingTextUpdate } from './floatingText'
 import { alteredUserName, dataType, joinSocketsServer } from './wsConnection'
-import { TriggerBoxShape } from '../node_modules/decentraland-ecs-utils/triggers/triggerSystem'
 import { meshIndices, meshVertices } from './physicsMesh'
 import { Hoop } from './hoop'
-import { BarStyles } from '../node_modules/@dcl/ui-utils/utils/types'
 import { Box } from 'cannon'
 
 export let ball: Ball
@@ -200,7 +198,13 @@ export let streakCounter = new ui.UICounter(0, -10, 30, Color4.Red())
 streakLabel.uiText.visible = false
 streakCounter.uiText.visible = false
 
-let strenghtBar = new ui.UIBar(0, -80, 80, Color4.Red(), BarStyles.ROUNDSILVER)
+let strenghtBar = new ui.UIBar(
+  0,
+  -80,
+  80,
+  Color4.Red(),
+  ui.BarStyles.ROUNDSILVER
+)
 let strengthLabel = new ui.CornerLabel('Strength', -80, 100, Color4.Red())
 strenghtBar.bar.visible = false
 strenghtBar.background.visible = false
@@ -216,25 +220,22 @@ engine.addEntity(uiArea)
 
 uiArea.addComponent(
   new utils.TriggerComponent(
-    new TriggerBoxShape(new Vector3(32, 32, 32), Vector3.Zero()),
-    null,
-    null,
-    null,
-    null,
-    () => {
-      if (!sceneStarted) {
-        setUpScene()
-        sceneStarted = true
-      }
+    new utils.TriggerBoxShape(new Vector3(32, 32, 32), Vector3.Zero()),
+    {
+      onCameraEnter: () => {
+        if (!sceneStarted) {
+          setUpScene()
+          sceneStarted = true
+        }
 
-      streakLabel.uiText.visible = true
-      streakCounter.uiText.visible = true
-    },
-    () => {
-      streakLabel.uiText.visible = false
-      streakCounter.uiText.visible = false
-    },
-    false
+        streakLabel.uiText.visible = true
+        streakCounter.uiText.visible = true
+      },
+      onCameraExit: () => {
+        streakLabel.uiText.visible = false
+        streakCounter.uiText.visible = false
+      },
+    }
   )
 )
 
