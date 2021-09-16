@@ -123,7 +123,18 @@ async function setUpScene() {
     strenghtBar.background.visible = true
     strengthLabel.uiText.visible = true
 
-    let shootDirection = Vector3.Forward().rotate(Camera.instance.rotation) // Camera's forward vector
+    let shootDirection = Vector3.Forward().rotate(
+      Camera.instance.rotation.clone()
+    ) // Camera's forward vector
+
+    log(
+      'SHOOT DIRECTION: ',
+      shootDirection,
+      'Rot:',
+      Camera.instance.rotation,
+      'Euler: ',
+      Camera.instance.rotation.eulerAngles
+    )
 
     ball.playerThrow(shootDirection, throwStrength)
 
