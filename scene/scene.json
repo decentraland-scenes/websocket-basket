@@ -8,10 +8,6 @@
     "email": ""
   },
   "owner": "",
-  "scene": {
-    "parcels": ["56,-59", "56,-58"],
-    "base": "56,-59"
-  },
   "communications": {
     "type": "webrtc",
     "signalling": "https://signalling-01.decentraland.org"
@@ -39,5 +35,12 @@
         "z": 8
       }
     }
-  ]
+  ],
+  "scene": {
+    "parcels": [
+      "-55,92",
+      "-55,93"
+    ],
+    "base": "-55,92"
+  }
 }
