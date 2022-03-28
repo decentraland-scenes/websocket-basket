@@ -41,7 +41,7 @@ export enum BallState {
   Idle,
   Confused,
   Happy,
-  Mad,
+  Mad
 }
 
 export class Ball extends Entity {
@@ -81,7 +81,7 @@ export class Ball extends Entity {
         transform.position.y,
         transform.position.z
       ), // m
-      shape: new CANNON.Sphere(0.25), // m (Create sphere shaped body with a radius of 0.2)
+      shape: new CANNON.Sphere(0.25) // m (Create sphere shaped body with a radius of 0.2)
     })
 
     const translocatorPhysicsMaterial: CANNON.Material = new CANNON.Material(
@@ -107,7 +107,7 @@ export class Ball extends Entity {
             ui.displayAnnouncement('SCORE!')
           },
           layer: 2,
-          triggeredByLayer: 1,
+          triggeredByLayer: 1
         }
       )
     )
@@ -160,8 +160,8 @@ export class Ball extends Entity {
           user: alteredUserName,
           pos: pos,
           streak: streakCounter.read(),
-          timeStamp: Date.now(),
-        },
+          timeStamp: Date.now()
+        }
       })
     )
 

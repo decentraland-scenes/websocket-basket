@@ -18,7 +18,7 @@ export function createFloatingText(
   height: number = 1,
   color: Color3 = Color3.Blue()
 ) {
-  let text = new Entity()
+  const text = new Entity()
   text.addComponent(new Billboard(true, true, true))
   //text.setParent(parent)
 
@@ -32,13 +32,13 @@ export function createFloatingText(
   pos.y = height
   text.addComponent(
     new Transform({
-      position: pos, // new Vector3(0, height, 0)
+      position: pos // new Vector3(0, height, 0)
     })
   )
   text.addComponent(new FloatingText(speed))
   engine.addEntity(text)
 
-  let textShape = new TextShape(val)
+  const textShape = new TextShape(val)
   text.addComponent(textShape)
 
   textShape.fontSize = 5
@@ -48,10 +48,10 @@ export function createFloatingText(
 
 export class FloatingTextUpdate implements ISystem {
   update(dt: number) {
-    for (let t of texts.entities) {
-      let transform = t.getComponent(Transform)
-      let text = t.getComponent(FloatingText)
-      let textShape = t.getComponent(TextShape)
+    for (const t of texts.entities) {
+      const transform = t.getComponent(Transform)
+      const text = t.getComponent(FloatingText)
+      const textShape = t.getComponent(TextShape)
       transform.position.y += dt / 2
       text.timeLeft -= dt * text.speed
       textShape.opacity *= 0.95

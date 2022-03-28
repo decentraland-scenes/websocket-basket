@@ -24,7 +24,7 @@ export class Hoop extends Entity {
                 data: {
                   //   threePoints: threePointShot,
                   // score:
-                },
+                }
               })
             )
 
@@ -35,7 +35,7 @@ export class Hoop extends Entity {
             }
           },
           layer: 1,
-          triggeredByLayer: 2,
+          triggeredByLayer: 2
         }
       )
     )

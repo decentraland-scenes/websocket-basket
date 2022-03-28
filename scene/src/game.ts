@@ -34,7 +34,7 @@ baseScene.addComponent(
 engine.addEntity(baseScene)
 
 async function setUpScene() {
-  let socket = await joinSocketsServer()
+  const socket = await joinSocketsServer()
 
   // Setup our CANNON world
   const world = new CANNON.World()
@@ -52,12 +52,12 @@ async function setUpScene() {
   )
   world.addContactMaterial(groundContactMaterial)
 
-  let envShape = new CANNON.Trimesh(meshVertices, meshIndices)
+  const envShape = new CANNON.Trimesh(meshVertices, meshIndices)
 
   // Create a ground plane
   const planeShape = new CANNON.Plane()
   const groundBody = new CANNON.Body({
-    mass: 0, // mass == 0 makes the body static
+    mass: 0, // mass === 0 makes the body static
   })
   groundBody.addShape(planeShape)
   groundBody.material = groundMaterial
@@ -66,7 +66,7 @@ async function setUpScene() {
   world.addBody(groundBody)
 
   const envBody = new CANNON.Body({
-    mass: 0, // mass == 0 makes the body
+    mass: 0, // mass === 0 makes the body
     position: new CANNON.Vec3(8, 0, 16),
   })
   envBody.addShape(envShape)
@@ -93,12 +93,12 @@ async function setUpScene() {
   )
   world.addContactMaterial(translocatorPhysicsContactMaterial)
 
-  let hoop1 = new Hoop(
+  const hoop1 = new Hoop(
     new Transform({ position: new Vector3(8, 4.5, 7) }),
     socket
   )
 
-  let hoop2 = new Hoop(
+  const hoop2 = new Hoop(
     new Transform({ position: new Vector3(8, 4.5, 32 - 7) }),
     socket
   )
@@ -123,7 +123,7 @@ async function setUpScene() {
     strenghtBar.background.visible = true
     strengthLabel.uiText.visible = true
 
-    let shootDirection = Vector3.Forward().rotate(
+    const shootDirection = Vector3.Forward().rotate(
       Camera.instance.rotation.clone()
     ) // Camera's forward vector
 
@@ -170,7 +170,7 @@ async function setUpScene() {
       return
     }
 
-    let dist = distance(
+    const dist = distance(
       ball.getComponent(Transform).position,
       Camera.instance.position.clone()
     )
@@ -204,24 +204,24 @@ function distance(pos1: Vector3, pos2: Vector3): number {
 
 engine.addSystem(new FloatingTextUpdate())
 
-let streakLabel = new ui.CornerLabel('Streak', -80, 30, Color4.Red())
-export let streakCounter = new ui.UICounter(0, -10, 30, Color4.Red())
+const streakLabel = new ui.CornerLabel('Streak', -80, 30, Color4.Red())
+export const streakCounter = new ui.UICounter(0, -10, 30, Color4.Red())
 streakLabel.uiText.visible = false
 streakCounter.uiText.visible = false
 
-let strenghtBar = new ui.UIBar(
+const strenghtBar = new ui.UIBar(
   0,
   -80,
   80,
   Color4.Red(),
   ui.BarStyles.ROUNDSILVER
 )
-let strengthLabel = new ui.CornerLabel('Strength', -80, 100, Color4.Red())
+const strengthLabel = new ui.CornerLabel('Strength', -80, 100, Color4.Red())
 strenghtBar.bar.visible = false
 strenghtBar.background.visible = false
 strengthLabel.uiText.visible = false
 
-let uiArea = new Entity()
+const uiArea = new Entity()
 uiArea.addComponent(
   new Transform({
     position: new Vector3(16, 0, 16),
@@ -235,7 +235,7 @@ uiArea.addComponent(
     {
       onCameraEnter: () => {
         if (!sceneStarted) {
-          setUpScene()
+          setUpScene().catch((error) => log(error))
           sceneStarted = true
         }
 
@@ -263,7 +263,7 @@ class strengthSetSystem implements ISystem {
   }
 }
 
-let distChecker = new Entity()
+const distChecker = new Entity()
 distChecker.addComponent(
   new Transform({
     position: new Vector3(8, 1, 7.2),
@@ -271,7 +271,7 @@ distChecker.addComponent(
 )
 engine.addEntity(distChecker)
 
-let distChecker2 = new Entity()
+const distChecker2 = new Entity()
 distChecker2.addComponent(
   new Transform({
     position: new Vector3(8, 1, 32 - 7.2),
@@ -280,12 +280,12 @@ distChecker2.addComponent(
 engine.addEntity(distChecker2)
 
 function checkShootdist() {
-  let squaredDist = distance(
+  const squaredDist = distance(
     Camera.instance.position,
     distChecker.getComponent(Transform).position
   )
 
-  let squaredDist2 = distance(
+  const squaredDist2 = distance(
     Camera.instance.position,
     distChecker2.getComponent(Transform).position
   )

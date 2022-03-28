@@ -16,7 +16,7 @@ export enum dataType {
   PICK,
   THROW,
   SYNC,
-  SCORE,
+  SCORE
 }
 
 const server = local
@@ -29,7 +29,7 @@ export async function joinSocketsServer() {
   userData = await getUserData()
   alteredUserName = userData.displayName + Math.floor(Math.random() * 10000)
 
-  let realm = await getCurrentRealm() // { displayName: 'pepito' } //
+  const realm = await getCurrentRealm() // { displayName: 'pepito' } //
 
   log(`You are in the realm: `, realm.displayName)
   // connect to websockets server
@@ -44,7 +44,7 @@ export async function joinSocketsServer() {
       log(msg)
 
       // ignore messages from the same player
-      if (msg.data.user == alteredUserName) {
+      if (msg.data.user === alteredUserName) {
         log('ignoring own message')
         return
       }
@@ -99,7 +99,7 @@ class pingSystem implements ISystem {
       this.socket.send(
         JSON.stringify({
           type: dataType.PING,
-          data: {},
+          data: {}
         })
       )
     }
@@ -124,7 +124,7 @@ class updateSystem implements ISystem {
             type: dataType.SYNC,
             holding: ball.holding,
             pos: ball.getComponent(Transform).position,
-            rot: ball.getComponent(Transform).rotation,
+            rot: ball.getComponent(Transform).rotation
           })
         )
       }
